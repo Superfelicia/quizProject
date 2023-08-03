@@ -77,6 +77,16 @@ const Quiz = () => {
         }));
     }
 
+    //returnera correctAnswer på question
+    const checkCorrectAnswer = (questionId, answer) => {
+        const question = questions.find((q) => q.id === parseInt(questionId));
+        if (!question) {
+            // Om frågan inte finns i questions-arrayen, return false
+            return false;
+        }
+        return question.correctAnswer === answer.trim();
+    }
+
     // När användaren klickar på "Finished"-knappen
     // avslutas quizet och postar svaren till servern
     const onFinishedClick = async () => {
@@ -107,12 +117,32 @@ const Quiz = () => {
 
     //lägg till funktion för att räkna ihop score på varje fråga och lägg till i array
     //gå igenom array när result är satt
-
+    const calculateScore = () => {
+        let correctAnswers = 0
+        for (const question of questions) {
+            console.log(question)
+            const questionId = question.id
+            const userAnswer = result[questionId]?.answer
+            if (userAnswer) {
+                const isCorrect = checkCorrectAnswer(questionId, userAnswer)
+                if (isCorrect) {
+                    correctAnswers++
+                }
+            }
+        }
+        console.log(correctAnswers)
+        return correctAnswers
+    }
 
     //skapa en useEffect som körs varje gång result eller questions ändras
     // Kontrollera om både "result" och "questions" finns och inte är falska.
     // Uppdatera state-variabeln "score" med den nya poängen.
-
+    useEffect(() => {
+        if (result && questions) {
+            const newScore = calculateScore()
+            setScore(newScore)
+        }
+    }, [result, questions])
 
     // visas när onFinishedClick klickats.
     // visar score och rätt svar
@@ -133,7 +163,8 @@ const Quiz = () => {
                             <ol className='answers-list score-text'>
                                 {quizAnswers.map((answerData) => (
                                     <li key={answerData.questionId}>
-                                        <p>
+                                        <p className={checkCorrectAnswer(answerData.questionId, answerData.answer) ?
+                                            'correct-answer score-text' : 'wrong-answer score-text'}>
                                             {answerData.answer}
                                         </p>
                                     </li>
