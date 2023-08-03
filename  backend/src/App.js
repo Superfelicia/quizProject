@@ -27,6 +27,40 @@ app.get('/getQuestions', (req, res) => {
     })
 })
 
+app.get('/getOptions', (req, res) => {
+    connection.connect((err) => {
+        if (err) throw err;
+        const sql = 'SELECT * FROM questions';
+
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            res.send(result);
+        });
+    });
+});
+
+app.post('/postQuizAnswers', (req, res) => {
+    const {result} = req.body;
+    console.log(result)
+
+    const sql = 'INSERT INTO answers (answer, questionId) VALUES ?';
+    const values = [];
+
+    for (const questionId in result) {
+        if (result.hasOwnProperty(questionId)) {
+            const answerData = result[questionId];
+            const {questionId: questId, answer} = answerData;
+            values.push([answer, questId]);
+        }
+    }
+    connection.query(sql, [values], (err, result) => {
+        if (err) throw err;
+        res.send();
+    })
+})
+
+//getQuizAnswers funktion
+
 app.listen(3001, () => {
     console.log(`server running on port ${port}`);
 });
