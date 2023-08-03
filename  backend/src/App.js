@@ -60,6 +60,19 @@ app.post('/postQuizAnswers', (req, res) => {
 })
 
 //getQuizAnswers funktion
+app.get('/getQuizAnswers', (req, res) => {
+    const sql = `SELECT a.questionId, a.answer FROM answers a LEFT JOIN answers b ON a.questionId = b.questionId AND a.id < b.id WHERE b.id IS NULL
+    `
+    connection.query(sql, (err, result) => {
+        if (err) throw err;
+
+        const quizAnswers = result.map((row) => {
+            const {questionId, answer} = row
+            return {questionId, answer}
+        })
+        res.send(quizAnswers);
+    })
+})
 
 app.listen(3001, () => {
     console.log(`server running on port ${port}`);

@@ -96,6 +96,13 @@ const Quiz = () => {
             console.log('Error:', error)
         }
         //lägg till getQuizAnswers
+        try {
+            const response = await fetch(url + '/getQuizAnswers')
+            const dataAnswers = await response.json()
+            setQuizAnswers(dataAnswers)
+        } catch (error) {
+            console.log('Error:', error)
+        }
     }
 
     //lägg till funktion för att räkna ihop score på varje fråga och lägg till i array
