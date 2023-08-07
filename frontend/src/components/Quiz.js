@@ -79,7 +79,7 @@ const Quiz = () => {
 
     //returnera correctAnswer på question
     const checkCorrectAnswer = (questionId, answer) => {
-        const question = questions.find((q) => q.id === parseInt(questionId));
+        const question = questions.find((theQuestion) => theQuestion.id === parseInt(questionId));
         if (!question) {
             // Om frågan inte finns i questions-arrayen, return false
             return false;
