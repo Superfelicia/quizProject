@@ -1,7 +1,8 @@
 import {useState, useEffect} from "react";
 
 const Quiz = () => {
-    const url = 'http://localhost:3001'
+    // const url = 'http://localhost:3001'
+    const url = 'https://8267-82-196-111-182.ngrok-free.app'
     const [questions, setQuestions] = useState();
     const [activeQuestion, setActiveQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
