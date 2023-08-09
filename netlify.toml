@@ -2,6 +2,6 @@
 base = "frontend/"
 
 [[redirects]]
-from = "/*"
+from = "/App.js"
 to = "/index.html"
 status = 200
