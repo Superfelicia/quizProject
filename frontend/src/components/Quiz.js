@@ -1,10 +1,10 @@
 import {useState, useEffect} from "react";
 
 const Quiz = () => {
-    // const url = 'http://localhost:3001'
-    const url = 'https://8267-82-196-111-182.ngrok-free.app'
-    const headers = new Headers();
-    headers.append('ngrok-skip-browser-warning', 'true');
+    const url = 'http://localhost:3001'
+    // const url = 'https://8267-82-196-111-182.ngrok-free.app'
+    // const headers = new Headers();
+    // headers.append('ngrok-skip-browser-warning', 'true');
     const [questions, setQuestions] = useState();
     const [activeQuestion, setActiveQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -17,7 +17,7 @@ const Quiz = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const response = await fetch(url + '/getQuestions', {headers});
+                const response = await fetch(url + '/getQuestions');
                 const data = await response.json();
                 return data;
             } catch (error) {
@@ -110,7 +110,7 @@ const Quiz = () => {
         }
         //lägg till getQuizAnswers
         try {
-            const response = await fetch(url + '/getQuizAnswers', {headers})
+            const response = await fetch(url + '/getQuizAnswers')
             const dataAnswers = await response.json()
             setQuizAnswers(dataAnswers)
         } catch (error) {
