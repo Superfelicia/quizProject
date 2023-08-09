@@ -1,7 +1,0 @@
-[build]
-base = "frontend/"
-
-[[redirects]]
-from = "/App.js"
-to = "/index.html"
-status = 200
