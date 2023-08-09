@@ -1,5 +1,4 @@
 import './styles/style.css'
-import Quiz from "./components/Quiz";
 import Home from "./components/Home";
 
 function App() {
@@ -9,7 +8,6 @@ function App() {
             <a href='#' className='logo'>Quiz</a>
         </header>
         <Home/>
-      {/*<Quiz/>*/}
     </div>
   );
 }

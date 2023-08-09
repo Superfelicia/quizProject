@@ -1,7 +1,7 @@
 import Quiz from "./Quiz";
 import {useState} from "react";
 
-const Home = () => {
+const Home = ({backHome}) => {
     const [showQuiz, setShowQuiz] = useState(false)
 
     const startQuiz = () => {
@@ -10,17 +10,14 @@ const Home = () => {
 
     return (
         <div className='home'>
-            {!showQuiz ? (
+            {!backHome && (
                 <div className='home-content'>
                     <h1>Quiz website</h1>
                     <p>Go to quiz</p>
                     <button className='start-btn' onClick={() => startQuiz()}>Start Quiz</button>
                 </div>
-            ) : (
-                <div>
-                    <Quiz/>
-                </div>
             )}
+            {showQuiz && <Quiz showQuiz={showQuiz}/>}
         </div>
     )
 }

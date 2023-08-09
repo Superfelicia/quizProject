@@ -13,6 +13,8 @@ const Quiz = () => {
     const [quizAnswers, setQuizAnswers] = useState(null);
     const [isFinished, setIsFinished] = useState(false);
     const [score, setScore] = useState(0);
+    const [backHome, setBackHome] = useState(false);
+
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -147,8 +149,13 @@ const Quiz = () => {
         }
     }, [result, questions])
 
+    const backHomeClick = () => {
+        setBackHome(true)
+    }
+
     // visas när onFinishedClick klickats.
     // visar score och rätt svar
+    // btn för att gå tillbaka till Home
     const quizIsFinished = () => {
         return (
             <>
@@ -175,13 +182,16 @@ const Quiz = () => {
                             </ol>
                         </div>
                     )}
+                    <div>
+                        <button className='back-btn' onClick={() => backHomeClick()}>Back</button>
+                    </div>
                 </div>
             </>
         );
     }
 
     return (
-        <div className="display-container">
+        <div className={backHome ? 'display-container display-end-container' : 'display-container'}>
             {questions?.length > 0 &&
                 <div>
                     {isFinished ? quizIsFinished() : (
@@ -199,18 +209,21 @@ const Quiz = () => {
                                     questions[activeQuestion].option.split(',').map((el, index) => (
                                         <div id="option-container"
                                              onClick={() => onSelectedAnswer(el, index, selectedAnswer)}
-                                             className={index === selectedAnswerIndex ? 'selected-answer' : null}
+                                             className={index === selectedAnswerIndex ? "selected-answer" : null}
                                              key={index}>
-                                            <div className='option-text'>
+                                            <div className="option-text">
                                                 {el}
                                             </div>
                                         </div>
                                     ))
                                 }
                             </div>
-                            <button className="next-button" disabled={selectedAnswerIndex === null}
-                                    onClick={activeQuestion >= questions?.length - 1 ? onFinishedClick : onClickNext}>{activeQuestion === questions?.length - 1 ? 'Finish' : 'Next'}
-                            </button>
+                            <div className='next-button-box'>
+                                <button className="next-button" disabled={selectedAnswerIndex === null}
+                                        onClick={activeQuestion >= questions?.length - 1 ? onFinishedClick : onClickNext}>{activeQuestion === questions?.length - 1 ? 'Finish' : 'Next'}
+                                </button>
+                            </div>
+
                         </>
                     )}
                 </div>
