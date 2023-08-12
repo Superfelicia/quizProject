@@ -1,11 +1,6 @@
 import {useState, useEffect} from "react";
 
-const Quiz = () => {
-    //const url = 'http://localhost:3001'
-    const url = 'https://8267-82-196-111-182.ngrok-free.app'
-    const headers = new Headers();
-    headers.append('ngrok-skip-browser-warning', 'true');
-    const [questions, setQuestions] = useState();
+const Quiz = ({backHome, showQuiz, quizSlide, questions}) => {
     const [activeQuestion, setActiveQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
@@ -13,35 +8,26 @@ const Quiz = () => {
     const [quizAnswers, setQuizAnswers] = useState(null);
     const [isFinished, setIsFinished] = useState(false);
     const [score, setScore] = useState(0);
-    const [backHome, setBackHome] = useState(false);
 
+    const url = 'https://8267-82-196-111-182.ngrok-free.app'
+    const headers = new Headers();
+    headers.append('ngrok-skip-browser-warning', 'true');
 
     useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const response = await fetch(url + '/getQuestions', {headers});
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.error(error)
-                return null
-            }
+        if (showQuiz) {
+            quizReset()
         }
-        //Anropa fetchQuestions direkt i useEffect och handle result
-        (async () => {
-            const dataQuestions = await fetchQuestions()
-            if (dataQuestions !== null) {
-                setQuestions(dataQuestions)
-            }
-        })()
-    }, [])
+    }, [showQuiz])
 
-    console.log(questions);
-
-    //ändras när score state uppdateras
+    //skapa en useEffect som körs varje gång result eller questions ändras
+    // Kontrollera om både "result" och "questions" finns och inte är falska.
+    // Uppdatera state-variabeln "score" med den nya poängen.
     useEffect(() => {
-        console.log(score)
-    }, [score])
+        if (result && questions) {
+            const newScore = calculateScore()
+            setScore(newScore)
+        }
+    }, [result, questions])
 
     //Visa den aktuella frågan
     const renderQuestion = () => {
@@ -110,7 +96,6 @@ const Quiz = () => {
         } catch (error) {
             console.log('Error:', error)
         }
-        //lägg till getQuizAnswers
         try {
             const response = await fetch(url + '/getQuizAnswers', {headers})
             const dataAnswers = await response.json()
@@ -139,19 +124,19 @@ const Quiz = () => {
         return correctAnswers
     }
 
-    //skapa en useEffect som körs varje gång result eller questions ändras
-    // Kontrollera om både "result" och "questions" finns och inte är falska.
-    // Uppdatera state-variabeln "score" med den nya poängen.
-    useEffect(() => {
-        if (result && questions) {
-            const newScore = calculateScore()
-            setScore(newScore)
-        }
-    }, [result, questions])
+    const quizReset = () => {
+        setActiveQuestion(0)
+        setSelectedAnswer(null)
+        setSelectedAnswerIndex(null)
+        setResult([])
+        setQuizAnswers(null)
+        setIsFinished(false)
+        setScore(0)
+    }
 
     const backHomeClick = () => {
-        setBackHome(true)
-    }
+        backHome()
+    };
 
     // visas när onFinishedClick klickats.
     // visar score och rätt svar
@@ -191,7 +176,7 @@ const Quiz = () => {
     }
 
     return (
-        <div className={backHome ? 'display-container display-end-container' : 'display-container'}>
+        <div className={`display-container ${quizSlide ? 'quiz-slide' : 'quiz-slide-out'}`}>
             {questions?.length > 0 &&
                 <div>
                     {isFinished ? quizIsFinished() : (
@@ -223,7 +208,6 @@ const Quiz = () => {
                                         onClick={activeQuestion >= questions?.length - 1 ? onFinishedClick : onClickNext}>{activeQuestion === questions?.length - 1 ? 'Finish' : 'Next'}
                                 </button>
                             </div>
-
                         </>
                     )}
                 </div>

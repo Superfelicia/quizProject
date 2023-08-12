@@ -3,11 +3,12 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
 body {
     height: 100vh;
-    background: linear-gradient(184deg, rgba(84, 152, 255, 0.79), rgba(121, 84, 255, 0.96));
+    background: linear-gradient(184deg, rgb(119, 158, 236), rgb(66, 163, 246));
 }
 
 .main-header {
@@ -60,9 +61,7 @@ body {
 .home-content .start-btn {
     width: 190px;
     height: 55px;
-    background-color: black;
-    border: 1px solid #4923a7;
-    box-shadow: 0 0 5px #4d2e98;
+    background-color: rgba(169, 90, 2, 0);
     outline: none;
     border-radius: 6px;
     font-size: 18px;
@@ -70,27 +69,18 @@ body {
     letter-spacing: 1px;
     font-weight: 600;
     cursor: pointer;
-    transition: 2s;
+    transition: 0.5s;
 }
 
 .home-content .start-btn:hover {
-    background-color: rgba(121, 84, 255, 0.96);
-    /*box-shadow: none;*/
+    background-color: rgb(241, 160, 71);
+    box-shadow: 0 0 5px rgba(245, 139, 25, 0.79);
 }
 
 button {
     border: none;
     outline: none;
     cursor: pointer;
-}
-
-@keyframes quiz-slide {
-    from {
-        transform: translateX(-150%);
-    }
-    to {
-        transform: translateX(0);
-    }
 }
 
 .display-container {
@@ -102,7 +92,17 @@ button {
     margin: 0 auto;
     position: absolute;
     border-radius: 0.6em;
-    animation: quiz-slide 1000ms;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes quiz-slide {
+    from {
+        transform: translateX(-150%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 @keyframes quiz-slide-out {
@@ -110,12 +110,16 @@ button {
         transform: translateX(0);
     }
     to {
-        transform: translateX(150%);
+        transform: translateX(200%);
     }
 }
 
-.display-end-container {
-    animation: quiz-slide-out 1000ms;
+.display-container.quiz-slide {
+    animation-name: quiz-slide;
+}
+
+.display-container.quiz-slide-out {
+    animation-name: quiz-slide-out;
 }
 
 .question-modal {
@@ -211,12 +215,11 @@ button {
 #option-container:hover, #option-gold:hover, #option-silver:hover, #option-bronze:hover {
     transform: scale(1.1);
     transition: transform 0.2s ease-in-out;
-    background-color: rgba(246, 231, 14, 0.29);
+    background-color: rgb(227, 247, 211);
 }
 
 #option-container.selected-answer {
-    background: rgba(253, 241, 7, 0.83);
-    border: 1px solid rgba(184, 190, 10, 0.75);
+    background: rgb(217, 245, 195);
 }
 
 #option-container:disabled {
@@ -232,7 +235,7 @@ button {
 .next-button, .back-btn {
     font-size: 1em;
     margin-top: 1.5em;
-    background-color: #8754ff;
+    background-color: #f16a47;
     color: #ffffff;
     padding: 0.7em 1.8em;
     border-radius: 0.3em;
