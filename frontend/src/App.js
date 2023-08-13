@@ -5,6 +5,7 @@ import Quiz from "./components/Quiz";
 
 function App() {
     const [showQuiz, setShowQuiz] = useState(false)
+    const [isStarted, setIsStarted] = useState(false)
     const [quizSlide, setQuizSlide] = useState(false)
     const [questions, setQuestions] = useState([])
 
@@ -40,8 +41,8 @@ function App() {
         }
     }, [showQuiz]);
 
-
     const startQuiz = () => {
+        setIsStarted(true)
         setShowQuiz(true)
     }
     const backHome = () => {
@@ -54,8 +55,8 @@ function App() {
                 <a href='#' className='logo'>SuperQuiz</a>
             </header>
             <Home startQuiz={startQuiz}/>
-            {showQuiz && questions &&
-                <Quiz questions={questions} showQuiz={showQuiz} backHome={backHome} quizSlide={quizSlide}/>}
+            {isStarted && questions &&
+                <Quiz questions={questions} showQuiz={showQuiz} quizSlide={quizSlide} backHome={backHome}/>}
         </div>
     );
 }

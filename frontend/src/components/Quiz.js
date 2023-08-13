@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 
-const Quiz = ({backHome, showQuiz, quizSlide, questions}) => {
+const Quiz = ({backHome, showQuiz, quizSlide, questions, setIsStarted}) => {
     const [activeQuestion, setActiveQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
@@ -129,7 +129,6 @@ const Quiz = ({backHome, showQuiz, quizSlide, questions}) => {
         setSelectedAnswer(null)
         setSelectedAnswerIndex(null)
         setResult([])
-        setQuizAnswers(null)
         setIsFinished(false)
         setScore(0)
     }
@@ -178,7 +177,7 @@ const Quiz = ({backHome, showQuiz, quizSlide, questions}) => {
     return (
         <div className={`display-container ${quizSlide ? 'quiz-slide' : 'quiz-slide-out'}`}>
             {questions?.length > 0 &&
-                <div>
+                <div className='quiz-box'>
                     {isFinished ? quizIsFinished() : (
                         <>
                             <div className="header">
