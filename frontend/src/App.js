@@ -52,7 +52,7 @@ function App() {
     return (
         <div className='home'>
             <header className='main-header'>
-                <a href='#' className='logo'>SuperQuiz</a>
+                <a href='/' className='logo'>SuperQuiz</a>
             </header>
             <Home startQuiz={startQuiz}/>
             {isStarted && questions &&

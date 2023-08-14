@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 
-const Quiz = ({backHome, showQuiz, quizSlide, questions, setIsStarted}) => {
+const Quiz = ({backHome, showQuiz, quizSlide, questions}) => {
     const [activeQuestion, setActiveQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
@@ -96,6 +96,8 @@ const Quiz = ({backHome, showQuiz, quizSlide, questions, setIsStarted}) => {
         } catch (error) {
             console.log('Error:', error)
         }
+        //Gör om funktionen för att inte behöva getta och använda
+        //result från posten och visa istället
         try {
             const response = await fetch(url + '/getQuizAnswers', {headers})
             const dataAnswers = await response.json()
