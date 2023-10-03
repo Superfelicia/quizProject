@@ -9,7 +9,7 @@ function App() {
     const [quizSlide, setQuizSlide] = useState(false)
     const [questions, setQuestions] = useState([])
 
-    const url = 'https://8267-82-196-111-182.ngrok-free.app'
+    const url = 'https://b882-94-234-99-65.ngrok-free.app'
     const headers = new Headers();
     headers.append('ngrok-skip-browser-warning', 'true');
 
